@@ -1,0 +1,68 @@
+<head>
+	<title>Realtime Barcelona, as seen by instagramers.</title>
+	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script> 
+	<meta name="viewport", content="width=device-width, initial-scale=0.5, user-scalable=no">
+	<script type="text/javascript">
+	//google analytics
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-37511447-1']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+		var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	//tweet button
+	!function(d,s,id){
+	  var js,fjs=d.getElementsByTagName(s)[0];
+	  if(!d.getElementById(id)){
+	    js=d.createElement(s);js.id=id;
+	    js.src="https://platform.twitter.com/widgets.js";
+	    fjs.parentNode.insertBefore(js,fjs);
+	  }
+	}(document,"script","twitter-wjs");
+	</script>
+</head>
+
+<body>
+{{> main}}
+{{> instagram}}
+</body>
+
+<template name="main">
+	<header>
+		<span>BARCELONAGRAM</span>
+		<!--
+		<select name="place-selector" id="place-selector">
+			<option value="other" id="default-selection" selected>change zone</option>
+			{{#placesIterator}}{{/placesIterator}}
+		</select>
+	-->
+		<nav>
+			<div class="selector-button">Gràcia</div>
+			<ul class="selector-options">
+				{{#placesIterator}}{{/placesIterator}}
+			</ul>
+		</nav>
+		{{#constant}}
+		<!--<div class="social">
+			<a href="https://twitter.com/share" class="twitter-share-button" 
+			data-lang="en" data-text="Barcelonagram: See Barcelona in realtime through instagram!" 
+			data-via="lechienvic" target="_blank">Tweet</a>
+		</div>-->
+		{{/constant}}
+	</header>
+	<div id="top-space"></div>
+</template>
+
+<template name="instagram">
+	<div class="photos-container">
+		{{#each photoset}}
+		<img class="photo" src="{{ images.low_resolution.url }}" alt="">
+		{{/each}}
+		<div class="button-more">MORE</div>
+	</div>
+	<div id="zoomed-image">
+	</div>
+</template>
