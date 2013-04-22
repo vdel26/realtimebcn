@@ -2,38 +2,48 @@
 Places = new Meteor.Collection("places");
 Meteor.subscribe("places");
 
-var CLIENTID = 'b80f0b2261fb47db926ce2e76e78d1d4';
+if (typeof API === 'undefined') {
+  API = {};
+}
 
-// Success callback for ajax request. Stores json in session variable.
-var onJsonLoaded = function (json){
-  if (json.meta.code == 200) {
-    var show = json.data;
-    Session.set('photoset', show);
-  } else{
-    alert(json.meta.error_message);
-  }
-};
+API = function () {
+  var CLIENTID = 'b80f0b2261fb47db926ce2e76e78d1d4';
 
-var getNewPhotos = function (place) {
-  if (typeof place === "undefined") {
-    var place = {};
-    place.lat = '41.393294';
-    place.lon = '2.16259';
-    place.dist = '2000';
-  }
-  $.ajax({
-  url: 'https://api.instagram.com/v1/media/search?callback=?',
-  dataType: 'json',
-  data: {lat: place.lat, lng: place.lon, distance:place.dist, client_id: CLIENTID},
-  success: onJsonLoaded,
-  statusCode: {
-    500: function () {
-      // instagram API endpoint returns 500 when it's down
-      alert('Sorry, service is temporarily down.');
+  var onJsonLoaded = function (json){
+    if (json.meta.code == 200) {
+      var show = json.data;
+      Session.set('photoset', show);
+    } else{
+      alert(json.meta.error_message);
     }
-  }
-  });
-};
+  };
+
+  var getNewPhotos = function (place) {
+    if (typeof place === "undefined") {
+      var place = {};
+      place.lat = '41.393294';
+      place.lon = '2.16259';
+      place.dist = '2000';
+    }
+    $.ajax({
+    url: 'https://api.instagram.com/v1/media/search?callback=?',
+    dataType: 'json',
+    data: {lat: place.lat, lng: place.lon, distance:place.dist, client_id: CLIENTID},
+    success: onJsonLoaded,
+    statusCode: {
+      500: function () {
+        // instagram API endpoint returns 500 when it's down
+        alert('Sorry, service is temporarily down.');
+      }
+    }
+    });
+  };
+  return {
+    getNewPhotos: getNewPhotos,
+    clientid: CLIENTID
+  };
+}();
+
 
 Meteor.startup(function(){
   Session.set('photoset', '');
@@ -44,8 +54,15 @@ Meteor.startup(function(){
   $('.header-title').lettering();
 
   // retrieve first set of photos
-  getNewPhotos();
+  API.getNewPhotos();
 });
+
+Template.instagram.rendered = function () {
+  $('.photos-container').isotope({
+    itemSelector: '.photo',
+    layoutMode: 'fitRows'
+  });
+};
 
 // HELPER to populate selector with place names
 Handlebars.registerHelper('placesIterator', function (){
@@ -70,7 +87,7 @@ Template.instagram.events({
 'click .button-more': function(){
   var place = String(Session.get('selected'));
   var current_place = Places.findOne({name: place});
-  getNewPhotos(current_place);
+  API.getNewPhotos(current_place);
 },
 'click .photo': function(event){
   $('.photos-container').toggleClass('greyed');
@@ -93,7 +110,7 @@ Template.main.events({
   var place = String($('#place-selector option:selected').val());
   var current_place = Places.findOne({name: place});
   Session.set('selected', current_place.name);
-  getNewPhotos(current_place);
+  API.getNewPhotos(current_place);
 },
 'mouseenter #place-selector': function (){
   $('#place-selector').focus();
