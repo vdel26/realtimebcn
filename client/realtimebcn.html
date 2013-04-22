@@ -1,6 +1,5 @@
 <head>
 	<title>Realtime Barcelona, as seen by instagramers.</title>
-	<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script> 
 	<meta name="viewport", content="width=device-width, initial-scale=0.5, user-scalable=no">
 	<script type="text/javascript">
 	//google analytics
@@ -22,6 +21,7 @@
 	    fjs.parentNode.insertBefore(js,fjs);
 	  }
 	}(document,"script","twitter-wjs");
+
 	</script>
 </head>
 
@@ -32,7 +32,9 @@
 
 <template name="main">
 	<header>
-		<span>BARCELONAGRAM</span>
+		{{#constant}}
+		<span class="header-title">BARCELONAGRAM</span>
+		{{/constant}}
 		<!--
 		<select name="place-selector" id="place-selector">
 			<option value="other" id="default-selection" selected>change zone</option>

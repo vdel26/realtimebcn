@@ -12,11 +12,10 @@ var onJsonLoaded = function (json){
   } else{
     alert(json.meta.error_message);
   }
-  //Session.set('next_max_id', json.pagination.next_max_tag_id);
 };
 
 var getNewPhotos = function (place) {
-  if (!place) {
+  if (typeof place === "undefined") {
     var place = {};
     place.lat = '41.393294';
     place.lon = '2.16259';
@@ -36,12 +35,15 @@ var getNewPhotos = function (place) {
   });
 };
 
-// On startup, make first api call
 Meteor.startup(function(){
   Session.set('photoset', '');
   Session.set('selected', 'Barcelona');
   Session.set('zoomed', '');
 
+  // initialize letteringjs
+  $('.header-title').lettering();
+
+  // retrieve first set of photos
   getNewPhotos();
 });
 

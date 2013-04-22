@@ -28,7 +28,7 @@ nav {
 	cursor: pointer;
 }
 .selector-button {
-	background: #D7D7D7 url("/dropdown-arrow.png") no-repeat right center;
+	background: #D7D7D7 url("/dropdown-arrow-down.png") no-repeat right 10px center;
 	border: 2px solid #717171;
 	border-radius: 10px;
 	margin-top: 10px;
@@ -37,9 +37,10 @@ nav {
 	padding-left: 8px;
 	padding-top: 2px;
 	box-sizing: border-box;
+	-webkit-transition: all 300ms linear;
 }
 nav:hover .selector-button{
-	background-color: #262626;
+	background: #262626 url("/dropdown-arrow-up.png") no-repeat right 10px center;
 	box-shadow: none;
 }
 .selector-options {
@@ -93,13 +94,16 @@ nav li:hover {
 }
 
 /*TITLE*/
-header span {
+header > span {
 	margin-left: 2.5%;
 	float: left;
 	font-family: 'Futura';
 	font-size: 38px;
 	color: #C37E7E;
 	cursor: default;
+}
+.char1, .char3, .char5, .char7, .char9, .char11, .char13 {
+	color: #C15757;
 }
 
 /* CHANGE CITY SELECTOR*/
