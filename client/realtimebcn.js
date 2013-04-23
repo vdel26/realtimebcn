@@ -7,7 +7,12 @@ if (typeof API === 'undefined') {
 }
 
 API = function () {
-  var CLIENTID = 'b80f0b2261fb47db926ce2e76e78d1d4';
+  var dataset = [],
+      CLIENTID = 'b80f0b2261fb47db926ce2e76e78d1d4';
+
+  var drawItems = function (data) {
+    // TO-DO
+  };
 
   var onJsonLoaded = function (json){
     if (json.meta.code == 200) {
@@ -73,10 +78,7 @@ Template.instagram.rendered = function () {
     itemSelector: '.photo',
     layoutMode: 'fitRows'
   });
-  /////////////////////////////////////////
-  $('.photos-container').isotope('shuffle', function () {
-    console.log("layout event");
-  });
+  $(window).trigger('resize'); // ugly hack. needs correction.
 };
 // HELPER to populate selector with place names
 Handlebars.registerHelper('placesIterator', function (){
@@ -88,7 +90,7 @@ Handlebars.registerHelper('placesIterator', function (){
   return out;
 });
 
-// TEMPLATE HELPERS
+// HELPERS for IG template
 Template.instagram.helpers({
 // make json data available to the template
 photoset: function(){
@@ -96,12 +98,16 @@ photoset: function(){
 }
 });
 
+// HELPERS for MAIN template
 Template.main.helpers({
 windowtop: function () {
   return Session.equals("windowtop", true) ? 'windowtop' : '';
 },
 listopen: function () {
   return Session.equals("listopen", true) ? 'listopen' : '';
+},
+listclosed : function () {
+  return Session.equals("listopen", true) ? '' : 'listclosed';
 },
 currentplace: function () {
   return Session.get('selected');

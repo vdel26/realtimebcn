@@ -32,7 +32,8 @@ nav {
 	cursor: pointer;
 }
 .selector-button {
-	background: #D7D7D7 url("/dropdown-arrow-down.png") no-repeat right 10px center;
+	//background: #D7D7D7 url("/dropdown-arrow-down.png") no-repeat right 10px center;
+	background: #D7D7D7;
 	border: 2px solid #717171;
 	border-radius: 10px;
 	margin-top: 10px;
@@ -42,11 +43,38 @@ nav {
 	padding-top: 2px;
 	box-sizing: border-box;
 }
+.selector-arrow {
+	background: transparent url("/dropdown-arrow-down.png") no-repeat center;
+	width: 16px;
+	height: 12px;
+	float: right;
+	margin-top: 6px;
+	margin-right: 8px;
+}
+.selector-arrow.listopen {
+	-webkit-animation-name: rotatearrow;
+	-webkit-animation-duration: 250ms;
+	-webkit-animation-fill-mode: forwards;
+	-webkit-animation-direction: normal;
+}
+.selector-arrow.listclosed {
+	-webkit-animation-name: rotatearrow;
+	-webkit-animation-duration: 250ms;
+	-webkit-animation-fill-mode: backwards;
+	-webkit-animation-direction: reverse;
+}
+@-webkit-keyframes rotatearrow {
+0% {-webkit-transform: rotate(0deg);}
+25% {-webkit-transform: rotate(45deg);}
+50% {-webkit-transform: rotate(90deg);}
+75% {-webkit-transform: rotate(135deg);}
+100% {-webkit-transform: rotate(180deg);}
+}
 .selector-button:hover {
 	border: 2px solid #262626;
 }
 .selector-button.listopen{
-	background: #D7D7D7 url("/dropdown-arrow-up.png") no-repeat right 10px center;
+	//background: #D7D7D7 url("/dropdown-arrow-up.png") no-repeat right 10px center;
 	box-shadow: none;
 }
 .selector-options {

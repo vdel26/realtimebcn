@@ -34,7 +34,10 @@
 		<span class="header-title">BARCELONAGRAM</span>
 		{{/constant}}
 		<nav>
-			<div class="selector-button {{listopen}}">{{currentplace}}</div>
+			<div class="selector-button {{listopen}}">
+				{{currentplace}}
+			<div class="selector-arrow {{listopen}}"></div>
+			</div>
 			<ul class="selector-options {{listopen}}">
 				{{#placesIterator}}{{/placesIterator}}
 			</ul>
