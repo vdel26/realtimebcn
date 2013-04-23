@@ -29,19 +29,13 @@
 </body>
 
 <template name="main">
-	<header>
+	<header class="{{windowtop}}">
 		{{#constant}}
 		<span class="header-title">BARCELONAGRAM</span>
 		{{/constant}}
-		<!--
-		<select name="place-selector" id="place-selector">
-			<option value="other" id="default-selection" selected>change zone</option>
-			{{#placesIterator}}{{/placesIterator}}
-		</select>
-		-->
 		<nav>
-			<div class="selector-button">Gràcia</div>
-			<ul class="selector-options">
+			<div class="selector-button {{listopen}}">{{currentplace}}</div>
+			<ul class="selector-options {{listopen}}">
 				{{#placesIterator}}{{/placesIterator}}
 			</ul>
 		</nav>

@@ -44,17 +44,28 @@ API = function () {
   };
 }();
 
-
 Meteor.startup(function(){
+  // initialize app state
   Session.set('photoset', '');
   Session.set('selected', 'Barcelona');
   Session.set('zoomed', '');
+  Session.set('windowtop', true);
+  Session.set('listopen', false);
 
   // initialize letteringjs
   $('.header-title').lettering();
 
   // retrieve first set of photos
   API.getNewPhotos();
+
+  $(window).scroll(function () {
+    if (window.scrollY <= 0) {
+      Session.set('windowtop', true);
+    }
+    else {
+      Session.set('windowtop', false);
+    }
+  });
 });
 
 Template.instagram.rendered = function () {
@@ -62,8 +73,11 @@ Template.instagram.rendered = function () {
     itemSelector: '.photo',
     layoutMode: 'fitRows'
   });
+  /////////////////////////////////////////
+  $('.photos-container').isotope('shuffle', function () {
+    console.log("layout event");
+  });
 };
-
 // HELPER to populate selector with place names
 Handlebars.registerHelper('placesIterator', function (){
   var place_list = Places.find({});
@@ -82,13 +96,20 @@ photoset: function(){
 }
 });
 
+Template.main.helpers({
+windowtop: function () {
+  return Session.equals("windowtop", true) ? 'windowtop' : '';
+},
+listopen: function () {
+  return Session.equals("listopen", true) ? 'listopen' : '';
+},
+currentplace: function () {
+  return Session.get('selected');
+}
+});
+
 // EVENT MAP for INSTAGRAM template
 Template.instagram.events({
-'click .button-more': function(){
-  var place = String(Session.get('selected'));
-  var current_place = Places.findOne({name: place});
-  API.getNewPhotos(current_place);
-},
 'click .photo': function(event){
   $('.photos-container').toggleClass('greyed');
   if (Session.equals('zoomed', '')) {
@@ -103,19 +124,20 @@ Template.instagram.events({
 
 // EVENT MAP for MAIN template
 Template.main.events({
-'mouseover .selector-button': function () {
-  $('.selector-options').toggle();
+'click .selector-button': function () {
+  if (Session.equals('listopen', true)) {
+    Session.set('listopen', false);
+  }
+  else {
+    Session.set('listopen', true);
+  }
 },
-'change #place-selector': function(){
-  var place = String($('#place-selector option:selected').val());
-  var current_place = Places.findOne({name: place});
-  Session.set('selected', current_place.name);
-  API.getNewPhotos(current_place);
-},
-'mouseenter #place-selector': function (){
-  $('#place-selector').focus();
-},
-'mouseleave #place-selector': function (){
-  $('#place-selector').blur();
+'click .selector-options': function (event) {
+  var selectedOption = event.target.innerHTML;
+  var currentPlace = Places.findOne({name:selectedOption});
+  Session.set('selected', currentPlace.name);
+  API.getNewPhotos(currentPlace);
+  Session.set('listopen', false);
+  console.log(currentPlace);
 }
 });
