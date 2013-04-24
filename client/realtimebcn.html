@@ -1,6 +1,7 @@
 <head>
-	<title>Realtime Barcelona, as seen by instagramers.</title>
+	<title>Realtime Barcelona, as seen by instagramers</title>
 	<meta name="viewport", content="width=device-width, initial-scale=0.5, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
 	<script type="text/javascript">
 	//google analytics
 	var _gaq = _gaq || [];
@@ -35,10 +36,14 @@
 		{{/constant}}
 		<nav>
 			<div class="selector-button {{listopen}}">
+				<div class="mobile-button-line"></div>
+				<div class="mobile-button-line"></div>
+				<div class="mobile-button-line"></div>
 				{{currentplace}}
-			<div class="selector-arrow {{listopen}}"></div>
+				<div class="selector-arrow {{listopen}}"></div>
 			</div>
 			<ul class="selector-options {{listopen}}">
+				<li value="here" class="here-button">around me</li>
 				{{#placesIterator}}{{/placesIterator}}
 			</ul>
 		</nav>
@@ -58,7 +63,7 @@
 		{{#each photoset}}
 		<img class="photo" src="{{ images.low_resolution.url }}" alt="">
 		{{/each}}
-		<div class="button-more">MORE</div>
+		<!--<div class="button-more">MORE</div>-->
 	</div>
 	<div id="zoomed-image">
 	</div>
