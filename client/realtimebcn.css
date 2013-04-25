@@ -126,9 +126,6 @@ nav li:hover {
 		font-size: 52px;
 		margin-top: 10px;
 	}
-	.social {
-		display: none;
-	}
 	nav {
 		right: 0px;
 		width: 100%;
@@ -200,11 +197,6 @@ header > span {
 /* depends on Letteringjs */
 .char1, .char3, .char5, .char7, .char9, .char11, .char13 {
 	color: #C15757;
-}
-
-/* SHARE WITH FB OR TWITTER */
-header .social{
-	float: right;
 }
 
 .photos-container {
