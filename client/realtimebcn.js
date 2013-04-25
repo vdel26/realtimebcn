@@ -55,6 +55,9 @@ Meteor.startup(function(){
   Session.set('listopen', false);
   Session.set('loading', true);
 
+  // initialize fastclick
+  new FastClick(document.body);
+
   // initialize letteringjs
   $('.header-title').lettering();
 
