@@ -1,2 +1,3 @@
 .meteor
 .DS_Store
+tests/mocha/

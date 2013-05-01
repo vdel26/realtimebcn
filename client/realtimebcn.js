@@ -2,6 +2,34 @@
 Places = new Meteor.Collection("places");
 Meteor.subscribe("places");
 
+Meteor.startup(function(){
+  // initialize app state
+  Session.set('photoset', '');
+  Session.set('selected', 'Barcelona');
+  Session.set('zoomed', '');
+  Session.set('windowtop', true);
+  Session.set('listopen', false);
+  Session.set('loading', true);
+
+  // initialize fastclick
+  new FastClick(document.body);
+
+  // initialize letteringjs
+  $('.header-title').lettering();
+
+  // retrieve first set of photos
+  API.getNewPhotos();
+
+  $(window).scroll(function () {
+    if (window.scrollY <= 0) {
+      Session.set('windowtop', true);
+    }
+    else {
+      Session.set('windowtop', false);
+    }
+  });
+});
+
 if (typeof API === 'undefined') {
   API = {};
 }
@@ -36,7 +64,7 @@ API = function () {
           // instagram API endpoint returns 500 when it's down
           alert('Sorry, service is temporarily down.');
         }
-    }
+      }
     });
     Session.set('loading', true);
   };
@@ -45,34 +73,6 @@ API = function () {
     clientid: CLIENTID
   };
 }();
-
-Meteor.startup(function(){
-  // initialize app state
-  Session.set('photoset', '');
-  Session.set('selected', 'Barcelona');
-  Session.set('zoomed', '');
-  Session.set('windowtop', true);
-  Session.set('listopen', false);
-  Session.set('loading', true);
-
-  // initialize fastclick
-  new FastClick(document.body);
-
-  // initialize letteringjs
-  $('.header-title').lettering();
-
-  // retrieve first set of photos
-  API.getNewPhotos();
-
-  $(window).scroll(function () {
-    if (window.scrollY <= 0) {
-      Session.set('windowtop', true);
-    }
-    else {
-      Session.set('windowtop', false);
-    }
-  });
-});
 
 Template.instagram.rendered = function () {
   $('.photos-container').isotope({

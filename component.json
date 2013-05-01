@@ -1,0 +1,9 @@
+{
+    "name":  "Barcelonagram",
+    "version": "0.0.1",
+    "dependencies": {
+    },
+    "devDependencies": {
+        "mocha": "latest"
+    }
+}
