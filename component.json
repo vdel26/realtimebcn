@@ -4,6 +4,6 @@
     "dependencies": {
     },
     "devDependencies": {
-        "mocha": "latest"
+        "qunit":"latest"
     }
 }
